@@ -1,76 +1,94 @@
-# SIS Contable
+# 📊 Sistema Contable (ContaSys)
 
-Aplicación web construida con Laravel 12, Livewire y Vite.
+Sistema de gestión financiera desarrollado con **Laravel**, **Livewire**, y **Tailwind CSS**, diseñado para el control de ingresos, egresos, impuestos, planillas y resúmenes mensuales.
 
-## Requisitos
+---
 
-- Git
-- PHP 8.2 o superior, con la extensión PDO SQLite habilitada (para la configuración predeterminada)
-- Composer
-- Node.js y npm
+## 🚀 Guía de Instalación y Configuración Local
 
-En Windows puedes usar PHP desde XAMPP; instala Composer y Node.js por separado. Asegúrate de que PHP, Composer y Node.js estén disponibles en `PATH`. Comprueba las herramientas antes de empezar:
+Sigue estos pasos para clonar el repositorio y poner la aplicación en marcha en tu entorno local.
 
-```powershell
-php -v
-composer --version
-node -v
-npm -v
+### Prerrequisitos
+Asegúrate de tener instalado en tu sistema:
+* **PHP** (versión 8.2 o superior)
+* **Composer**
+* **Node.js y NPM**
+* **MySQL** o MariaDB
+
+---
+
+### Paso 1: Clonar el repositorio
+Abre tu terminal y ejecuta el siguiente comando para clonar el proyecto (reemplaza la URL con la de tu repositorio):
+
+```bash
+git clone https://github.com/tu-usuario/nombre-de-tu-repositorio.git
+cd nombre-de-tu-repositorio
 ```
 
-## Instalación y configuración
+---
 
-1. Clona el repositorio y entra en la carpeta del proyecto:
+### Paso 2: Instalar dependencias de PHP (Composer)
+Instala los paquetes necesarios del backend de Laravel:
 
-   ```powershell
-   git clone https://github.com/ManuelV723/sis-contable.git
-   cd sis-contable
+```bash
+composer install
+```
+
+---
+
+### Paso 3: Configurar el archivo de entorno (`.env`)
+1. Duplica el archivo de configuración de ejemplo:
+   ```bash
+   cp .env.example .env
+   ```
+2. Genera la llave de encriptación de la aplicación:
+   ```bash
+   php artisan key:generate
+   ```
+3. Abre el archivo `.env` en tu editor de código y configura los datos de acceso a tu base de datos:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=nombre_de_tu_base_de_datos
+   DB_USERNAME=tu_usuario_db
+   DB_PASSWORD=tu_contraseña_db
    ```
 
-2. Crea el archivo de base de datos SQLite. El archivo no está incluido en el repositorio:
+---
 
-   ```powershell
-   if (-not (Test-Path database\database.sqlite)) {
-       New-Item -ItemType File -Path database\database.sqlite
-   }
-   ```
+### Paso 4: Ejecutar las migraciones
+Crea las tablas correspondientes en tu base de datos ejecutando:
 
-3. Ejecuta el script de configuración del proyecto:
-
-   ```powershell
-   composer run setup
-   ```
-
-   Este comando instala las dependencias de PHP y JavaScript, crea `.env` a partir de `.env.example` si aún no existe, genera la clave de la aplicación, ejecuta las migraciones y compila los recursos del frontend.
-
-4. Inicia el servidor de desarrollo:
-
-   ```powershell
-   composer run dev
-   ```
-
-   Cuando los servicios terminen de iniciar, abre [http://localhost:8000](http://localhost:8000). Mantén esta terminal abierta mientras trabajas; pulsa `Ctrl+C` para detenerlos.
-
-## Base de datos
-
-La configuración inicial usa SQLite y la ruta predeterminada `database/database.sqlite`. Si necesitas volver a ejecutar las migraciones:
-
-```powershell
+```bash
 php artisan migrate
 ```
 
-Para utilizar MySQL, crea primero una base de datos vacía, cambia `DB_CONNECTION` a `mysql` en `.env` y configura `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` y `DB_PASSWORD`. Después, ejecuta:
+---
 
-```powershell
-php artisan migrate
+### Paso 5: Instalar dependencias de Frontend (NPM)
+Instala las librerías de Node.js para compilar Tailwind CSS:
+
+```bash
+npm install
 ```
 
-No compartas ni subas el archivo `.env`; contiene la configuración local y la clave de la aplicación.
+---
 
-## Pruebas
+### Paso 6: Ejecutar la aplicación
+Para levantar el entorno de desarrollo local, necesitarás **dos terminales** activas simultáneamente:
 
-Para ejecutar las pruebas automatizadas:
+* **Terminal 1 (Compilador de Assets en tiempo real - Vite):**
+  ```bash
+  npm run dev
+  ```
 
-```powershell
-composer run test
-```
+* **Terminal 2 (Servidor Local de Laravel):**
+  ```bash
+  php artisan serve
+  ```
+
+---
+
+### 🎉 ¡Listo!
+Una vez ejecutados los comandos anteriores, abre tu navegador y entra a la dirección proporcionada por Laravel (usualmente `http://127.0.0.1:8000/dashboard`).
